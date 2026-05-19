@@ -26,7 +26,7 @@ export const Header = ({ onCartToggle }) => {
       borderTop: 'none',
       borderLeft: 'none',
       borderRight: 'none',
-      background: 'rgba(7, 8, 10, 0.75)',
+      background: 'rgba(9, 11, 17, 0.75)',
       padding: '1rem 2rem'
     }}>
       <div style={{
@@ -139,12 +139,20 @@ export const Header = ({ onCartToggle }) => {
               gap: '1rem'
             }}>
               {/* Profile Brief Info */}
-              <div style={{
-                textAlign: 'right',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center'
-              }}>
+              <Link 
+                to="/profile" 
+                style={{
+                  textDecoration: 'none',
+                  textAlign: 'right',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'opacity 0.2s ease'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.opacity = 0.8}
+                onMouseOut={(e) => e.currentTarget.style.opacity = 1}
+              >
                 <div style={{
                   fontSize: '13px',
                   fontWeight: '600',
@@ -187,7 +195,7 @@ export const Header = ({ onCartToggle }) => {
                     <Star size={10} fill="currentColor" /> {user.fidelityPoints} pts
                   </span>
                 </div>
-              </div>
+              </Link>
 
               {/* Log out Button */}
               <button 

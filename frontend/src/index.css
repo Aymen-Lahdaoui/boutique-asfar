@@ -1,24 +1,24 @@
 :root {
-  /* ASFAR Official Palette */
-  --bg-dark: #07080a;
-  --bg-darker: #0d0f13;
-  --bg-card: rgba(26, 32, 44, 0.45);
-  --border-glass: rgba(255, 255, 255, 0.08);
+  /* ASFAR Official Palette - Ultra Premium Obsidian Space style */
+  --bg-dark: #090b11;        /* Luxurious midnight obsidian */
+  --bg-darker: #05060a;      /* Rich carbon absolute black */
+  --bg-card: rgba(18, 22, 33, 0.65); /* Elegant glass slate */
+  --border-glass: rgba(255, 255, 255, 0.06);
   
-  --asfar-green: #006B3C;
-  --asfar-green-hover: #008f50;
-  --asfar-red: #D2143A;
-  --asfar-red-hover: #f01e48;
-  --asfar-gold: #D4AF37;
-  --asfar-gold-hover: #f1c40f;
+  --asfar-green: #008f53;    /* Brighter premium emerald green */
+  --asfar-green-hover: #00be6f;
+  --asfar-red: #e11d48;      /* Sleek ruby crimson red */
+  --asfar-red-hover: #f43f5e;
+  --asfar-gold: #f5c518;     /* Luxurious metallic liquid gold */
+  --asfar-gold-hover: #fcd34d;
   
   --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
+  --text-secondary: #cbd5e1; /* Higher contrast off-white */
   --text-muted: #64748b;
   
-  --shadow-glow: 0 0 15px rgba(0, 107, 60, 0.25);
-  --shadow-gold-glow: 0 0 15px rgba(212, 175, 55, 0.3);
-  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-glow: 0 8px 30px rgba(0, 143, 83, 0.25);
+  --shadow-gold-glow: 0 8px 30px rgba(245, 197, 24, 0.25);
+  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Global resets */
@@ -36,7 +36,11 @@ body {
   color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;
-  line-height: 1.5;
+  line-height: 1.6;
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(0, 143, 83, 0.06) 0%, transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(225, 29, 72, 0.05) 0%, transparent 45%);
+  background-attachment: fixed;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -62,27 +66,27 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Glassmorphism Styles */
 .glass-panel {
-  background: rgba(13, 15, 19, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(13, 17, 26, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-glass);
-  border-radius: 16px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 }
 
 .glass-card {
-  background: rgba(22, 28, 36, 0.55);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(20, 25, 38, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-glass);
-  border-radius: 16px;
+  border-radius: 20px;
   transition: var(--transition-smooth);
 }
 
 .glass-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(0, 107, 60, 0.4);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), var(--shadow-glow);
+  transform: translateY(-8px) scale(1.01);
+  border-color: rgba(245, 197, 24, 0.35); /* Elegant gold glowing outline on hover */
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8), var(--shadow-gold-glow);
 }
 
 /* Buttons */

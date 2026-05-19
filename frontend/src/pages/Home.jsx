@@ -166,7 +166,18 @@ export const Home = () => {
         background: 'rgba(22, 28, 36, 0.45)',
         border: '1px solid var(--border-glass)'
       }}>
-        <Award size={48} className="text-gradient" style={{ margin: '0 auto 1rem auto' }} />
+        <img 
+          src="/AS_FAR_logo.png" 
+          alt="ASFAR Logo" 
+          style={{
+            width: '64px',
+            height: '64px',
+            objectFit: 'contain',
+            margin: '0 auto 1.25rem auto',
+            display: 'block',
+            filter: 'drop-shadow(0 0 8px rgba(212, 175, 55, 0.3))'
+          }}
+        />
         <h2 style={{
           fontSize: '28px',
           fontWeight: '850',

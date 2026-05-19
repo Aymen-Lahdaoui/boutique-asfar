@@ -35,9 +35,10 @@ public class SecurityConfig {
             // Règles d'autorisation
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/h2-console/**").permitAll() // H2 console public
+                .requestMatchers("/error").permitAll()          // Permettre les erreurs Tomcat/Spring
                 .requestMatchers("/api/auth/**").permitAll()   // Auth (connexion, inscription, carte)
-                .requestMatchers("/api/products/**").permitAll() // Catalogue public
-                .requestMatchers("/api/orders/**").permitAll()   // Gestion des commandes
+                .requestMatchers("/api/products", "/api/products/**").permitAll() // Catalogue public
+                .requestMatchers("/api/orders", "/api/orders/**").permitAll()   // Gestion des commandes
                 .anyRequest().authenticated()
             );
 

@@ -77,6 +77,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Liaison "Carte Askary"
+  // Liaison "Carte Askary"
   const validateAskaryCard = async (cardNumber) => {
     setError(null);
     if (!user) throw new Error("Vous devez être connecté pour lier votre carte.");
@@ -110,6 +111,102 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Résiliation d'Abonnement Askary
+  const cancelAskarySubscription = async () => {
+    setError(null);
+    if (!user) throw new Error("Vous devez être connecté pour modifier votre abonnement.");
+
+    try {
+      const response = await axios.post(`${API_BASE}/cancel-askary`, {
+        userId: user.id
+      });
+      const updatedUser = response.data;
+      setUser(updatedUser);
+      localStorage.setItem('askary_user', JSON.stringify(updatedUser));
+      return updatedUser;
+    } catch (err) {
+      console.warn("Résiliation API échouée, application locale...");
+      const updatedUser = {
+        ...user,
+        askaryCardNumber: null,
+        subscriber: false
+      };
+      setUser(updatedUser);
+      localStorage.setItem('askary_user', JSON.stringify(updatedUser));
+      return updatedUser;
+    }
+  };
+
+  // Envoi du code de vérification par email
+  const sendVerificationCode = async () => {
+    if (!user) throw new Error("Vous devez être connecté.");
+    try {
+      const response = await axios.post(`${API_BASE}/send-verification-code`, { userId: user.id });
+      // Backend a réussi : supprimer tout ancien code local pour éviter les conflits
+      localStorage.removeItem('_askary_pending_code');
+      return response.data;
+    } catch (err) {
+      // Fallback local uniquement si le backend est hors ligne (pas de réponse du tout)
+      if (!err.response) {
+        console.warn("Backend hors ligne, génération d'un code local de secours.");
+        const randomDigits = Math.floor(10000 + Math.random() * 90000);
+        const fallbackCode = `ASK-SUB-${randomDigits}`;
+        localStorage.setItem('_askary_pending_code', JSON.stringify({ userId: user.id, code: fallbackCode }));
+        return {
+          message: "Mode hors ligne : code de simulation généré localement.",
+          sent: false,
+          fallbackCode: fallbackCode
+        };
+      }
+      const backendError = err.response?.data;
+      const errorMessage = typeof backendError === 'string'
+        ? backendError
+        : (backendError?.message || "Erreur lors de l'envoi du code.");
+      throw new Error(errorMessage);
+    }
+  };
+
+  // Vérification du code
+  const verifyCode = async (code) => {
+    if (!user) throw new Error("Vous devez être connecté.");
+    try {
+      const response = await axios.post(`${API_BASE}/verify-code`, { userId: user.id, code });
+      const updatedUser = response.data;
+      setUser(updatedUser);
+      localStorage.setItem('askary_user', JSON.stringify(updatedUser));
+      localStorage.removeItem('_askary_pending_code');
+      return updatedUser;
+    } catch (err) {
+      // Si le backend a répondu avec une erreur (ex: code incorrect), on la remonte directement
+      if (err.response) {
+        throw new Error(err.response.data || "Code incorrect. Vérifiez votre email et réessayez.");
+      }
+      // Sinon, fallback local uniquement si le backend est hors ligne
+      console.warn("Backend hors ligne, vérification locale du code.");
+      const stored = localStorage.getItem('_askary_pending_code');
+      if (stored) {
+        const { userId, code: expectedCode } = JSON.parse(stored);
+        if (userId === user.id && code.trim().toUpperCase() === expectedCode.toUpperCase()) {
+          const randomDigits = Math.floor(10000 + Math.random() * 90000);
+          const generatedCard = `ASK-${randomDigits}`;
+          const updatedUser = {
+            ...user,
+            askaryCardNumber: generatedCard,
+            subscriber: true,
+            fidelityPoints: user.fidelityPoints + 50
+          };
+          setUser(updatedUser);
+          localStorage.setItem('askary_user', JSON.stringify(updatedUser));
+          localStorage.removeItem('_askary_pending_code');
+          return updatedUser;
+        } else {
+          throw new Error("Code incorrect. Vérifiez le code affiché à l'écran.");
+        }
+      }
+      throw new Error("Backend indisponible et aucun code local trouvé. Veuillez réessayer.");
+    }
+  };
+
   // Déconnexion
   const logout = () => {
     setUser(null);
@@ -126,7 +223,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, error, login, register, validateAskaryCard, logout, addLocalFidelityPoints }}>
+    <AuthContext.Provider value={{ user, loading, error, login, register, validateAskaryCard, cancelAskarySubscription, sendVerificationCode, verifyCode, logout, addLocalFidelityPoints }}>
       {children}
     </AuthContext.Provider>
   );

@@ -16,3 +16,11 @@ target/
 *.jar
 *.war
 .mvn/
+
+# Database
+backend/data/
+*.db
+
+# Logs
+*.log
+backend/backend.log

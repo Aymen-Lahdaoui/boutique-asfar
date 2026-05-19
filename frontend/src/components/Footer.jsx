@@ -9,7 +9,7 @@ export const Footer = () => {
       borderBottom: 'none',
       borderLeft: 'none',
       borderRight: 'none',
-      background: 'rgba(7, 8, 10, 0.95)',
+      background: 'rgba(9, 11, 17, 0.95)',
       padding: '3rem 2rem 1.5rem 2rem'
     }}>
       <div style={{

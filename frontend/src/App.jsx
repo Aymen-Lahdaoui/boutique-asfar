@@ -18,6 +18,7 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Checkout } from './pages/Checkout';
 import { AdminDashboard } from './pages/AdminDashboard';
+import { Profile } from './pages/Profile';
 
 export const App = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -55,6 +56,7 @@ export const App = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/profile" element={<Profile />} />
               </Routes>
             </main>
 

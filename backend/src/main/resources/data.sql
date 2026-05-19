@@ -1,5 +1,9 @@
 -- Nettoyage des tables pour éviter les doublons lors des recharges
 -- Hibernate crée les tables avant d'exécuter data.sql grâce au paramètre ddl-auto=update
+DELETE FROM order_items;
+DELETE FROM orders;
+DELETE FROM products;
+DELETE FROM users;
 
 -- Insertion des produits de test de l'ASFAR
 INSERT INTO products (id, name, description, price, image_url, category, stock_quantity, is_personalizable, sizes) VALUES
@@ -11,17 +15,17 @@ INSERT INTO products (id, name, description, price, image_url, category, stock_q
 (6, 'Maillot officiel de compétition', 'Troisième maillot de compétition de la saison.', 250.0, '/image/maillot b3c.jpg', 'MATCHDAY', 15, true, 'S,M,L,XL');
 
 -- Insertion des utilisateurs de test
--- Mot de passe 'Password123' haché par BCrypt : $2a$10$r.2S35sS56gBwT7x69QyDuY/C1B2sA3d4f5g6h7j8k9l0m1n2o3p4
--- Mot de passe 'AdminPassword123' haché par BCrypt : $2a$10$r.2S35sS56gBwT7x69QyDuY/C1B2sA3d4f5g6h7j8k9l0m1n2o3p5
+-- Mot de passe 'Password123' haché par BCrypt : $2a$10$TY0ry.EpaNHtZ058/qGuyOklJP9eoLm1r5Wojp4Hkp/MfLW6aYrZe
+-- Mot de passe 'AdminPassword123' haché par BCrypt : $2a$10$fOVLL0dmUIHz1yR.9QSIO.sfnjKGGTTOVK5Kb15.1rJVMIye/rvqS
 
 -- 1. Client Standard (Non abonné, sans carte)
 INSERT INTO users (id, email, password, username, role, askary_card_number, is_subscriber, fidelity_points) VALUES
-(1, 'client@askary.ma', '$2a$10$r.2S35sS56gBwT7x69QyDuY/C1B2sA3d4f5g6h7j8k9l0m1n2o3p4', 'Aymane Askary', 'USER', NULL, false, 0);
+(1, 'client@askary.ma', '$2a$10$TY0ry.EpaNHtZ058/qGuyOklJP9eoLm1r5Wojp4Hkp/MfLW6aYrZe', 'Aymane Askary', 'USER', NULL, false, 0);
 
 -- 2. Client Abonné (Détenteur d'une Carte Askary "ASK-19580" déjà validée, lui donnant 10% de réduction)
 INSERT INTO users (id, email, password, username, role, askary_card_number, is_subscriber, fidelity_points) VALUES
-(2, 'abonne@askary.ma', '$2a$10$r.2S35sS56gBwT7x69QyDuY/C1B2sA3d4f5g6h7j8k9l0m1n2o3p4', 'Med Askary 12', 'USER', 'ASK-19580', true, 150);
+(2, 'abonne@askary.ma', '$2a$10$TY0ry.EpaNHtZ058/qGuyOklJP9eoLm1r5Wojp4Hkp/MfLW6aYrZe', 'Med Askary 12', 'USER', 'ASK-19580', true, 150);
 
 -- 3. Administrateur (Accès au Dashboard Admin de gestion)
 INSERT INTO users (id, email, password, username, role, askary_card_number, is_subscriber, fidelity_points) VALUES
-(3, 'admin@askary.ma', '$2a$10$r.2S35sS56gBwT7x69QyDuY/C1B2sA3d4f5g6h7j8k9l0m1n2o3p5', 'Admin ASFAR', 'ADMIN', NULL, false, 0);
+(3, 'admin@askary.ma', '$2a$10$fOVLL0dmUIHz1yR.9QSIO.sfnjKGGTTOVK5Kb15.1rJVMIye/rvqS', 'Admin ASFAR', 'ADMIN', NULL, false, 0);
