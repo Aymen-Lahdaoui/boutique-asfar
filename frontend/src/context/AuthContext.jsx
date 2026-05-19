@@ -68,13 +68,11 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('askary_user', JSON.stringify(userData));
       return userData;
     } catch (err) {
-      console.warn("Inscription API échouée, tentative en mode autonome local...");
-      
-      // Fallback local
-      const mockNewUser = { id: Date.now(), username, email, role: 'USER', subscriber: false, fidelityPoints: 0 };
-      setUser(mockNewUser);
-      localStorage.setItem('askary_user', JSON.stringify(mockNewUser));
-      return mockNewUser;
+      // Afficher une vraie erreur si le backend est indisponible ou si l'email est déjà utilisé
+      if (err.response && err.response.data) {
+        throw new Error(err.response.data);
+      }
+      throw new Error("Le serveur est indisponible. Assurez-vous que le backend est bien démarré.");
     }
   };
 

@@ -214,41 +214,43 @@ export const Header = ({ onCartToggle }) => {
             </div>
           )}
 
-          {/* Floating Cart Button */}
-          <button 
-            onClick={onCartToggle}
-            className="btn btn-primary"
-            style={{
-              position: 'relative',
-              background: 'linear-gradient(135deg, var(--asfar-green), #00502c)',
-              padding: '0.65rem',
-              borderRadius: '10px',
-              border: '1px solid rgba(255, 255, 255, 0.1)'
-            }}
-          >
-            <ShoppingBag size={20} />
-            {totalCartCount > 0 && (
-              <span style={{
-                position: 'absolute',
-                top: '-6px',
-                right: '-6px',
-                background: 'var(--asfar-red)',
-                color: 'white',
-                fontSize: '10px',
-                fontWeight: '800',
-                borderRadius: '50%',
-                width: '18px',
-                height: '18px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                border: '2px solid var(--bg-dark)',
-                boxShadow: '0 0 10px rgba(0,0,0,0.5)'
-              }}>
-                {totalCartCount}
-              </span>
-            )}
-          </button>
+          {/* Floating Cart Button - Only visible if logged in */}
+          {user && (
+            <button 
+              onClick={onCartToggle}
+              className="btn btn-primary"
+              style={{
+                position: 'relative',
+                background: 'linear-gradient(135deg, var(--asfar-green), #00502c)',
+                padding: '0.65rem',
+                borderRadius: '10px',
+                border: '1px solid rgba(255, 255, 255, 0.1)'
+              }}
+            >
+              <ShoppingBag size={20} />
+              {totalCartCount > 0 && (
+                <span style={{
+                  position: 'absolute',
+                  top: '-6px',
+                  right: '-6px',
+                  background: 'var(--asfar-red)',
+                  color: 'white',
+                  fontSize: '10px',
+                  fontWeight: '800',
+                  borderRadius: '50%',
+                  width: '18px',
+                  height: '18px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  border: '2px solid var(--bg-dark)',
+                  boxShadow: '0 0 10px rgba(0,0,0,0.5)'
+                }}>
+                  {totalCartCount}
+                </span>
+              )}
+            </button>
+          )}
         </div>
       </div>
     </header>

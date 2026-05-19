@@ -9,6 +9,8 @@ export const Home = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+
+
   // Liste de secours (mock) de produits phares si le serveur backend n'est pas encore lancé
   const mockFeatured = [
     {
@@ -47,7 +49,6 @@ export const Home = () => {
     const fetchFeatured = async () => {
       try {
         const response = await axios.get('http://localhost:8082/api/products');
-        // Prendre les 3 premiers produits pour l'accueil
         setFeaturedProducts(response.data.slice(0, 3));
       } catch (err) {
         console.warn("API indisponible. Chargement des produits vedettes en local.");
@@ -134,52 +135,7 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* 2. Collections Quick-Access Grid */}
-      <section style={{ marginBottom: '4rem' }}>
-        <h2 style={{ fontSize: '24px', fontWeight: '800', marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <TrendingUp size={22} className="text-gradient" /> Explorer nos Collections
-        </h2>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-          gap: '1.5rem'
-        }}>
-          {['MATCHDAY', 'STREETWEAR', 'ACCESSOIRES', 'HERITAGE'].map((category) => {
-            const labels = {
-              MATCHDAY: { title: 'Matchday (Gamme Pro)', desc: 'Maillots officiels et tenues de match des militaires.', icon: '👕', badge: 'Performance' },
-              STREETWEAR: { title: 'Streetwear & Lifestyle', desc: 'Vestes, t-shirts et sweats pour la vie de tous les jours.', icon: '👟', badge: 'Mode Urbaine' },
-              ACCESSOIRES: { title: 'Accessoires Askary', desc: 'Écharpes, casquettes et objets officiels des Ultras.', icon: '🎗️', badge: 'Supporter' },
-              HERITAGE: { title: 'Collection Héritage Rétro', desc: 'Rééditions de maillots historiques de nos exploits passés.', icon: '🏆', badge: 'Historique' }
-            };
-            const label = labels[category];
-            return (
-              <div 
-                key={category} 
-                onClick={() => handleCollectionClick(category)}
-                className="glass-card" 
-                style={{
-                  padding: '1.75rem',
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  height: '200px'
-                }}
-              >
-                <div>
-                  <div style={{ fontSize: '32px', marginBottom: '10px' }}>{label.icon}</div>
-                  <h3 style={{ fontSize: '17px', fontWeight: '700', color: 'white', marginBottom: '6px' }}>{label.title}</h3>
-                  <p style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{label.desc}</p>
-                </div>
-                <span className="badge badge-green" style={{ alignSelf: 'flex-start', fontSize: '8px', padding: '1px 5px', marginTop: '10px' }}>
-                  {label.badge}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+
 
       {/* 3. Featured Products Grid */}
       <section style={{ marginBottom: '4.5rem' }}>
