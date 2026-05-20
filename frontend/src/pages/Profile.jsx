@@ -377,12 +377,27 @@ export const Profile = () => {
                   <span style={{
                     fontSize: '12px',
                     fontWeight: 'bold',
-                    color: user.role === 'ADMIN' ? 'var(--asfar-gold)' : 'white',
+                    color: 
+                      user.role === 'ADMIN' ? 'var(--asfar-gold)' : 
+                      user.role === 'LOGISTICS' ? '#2ecc71' : 
+                      user.role === 'MARKETING' ? '#3498db' : 
+                      user.role === 'SUPPORT' ? '#e67e22' : 
+                      user.role === 'RESPO' ? '#9b59b6' :
+                      user.role === 'ADMIN_RESPO' ? '#1abc9c' :
+                      user.role === 'SUBSCRIBER_VIP' ? '#f43f5e' : 'white',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '4px'
                   }}>
-                    <Shield size={13} /> {user.role === 'ADMIN' ? 'Administrateur' : 'Client Askary'}
+                    <Shield size={13} /> {
+                      user.role === 'ADMIN' ? 'Administrateur' : 
+                      user.role === 'LOGISTICS' ? 'Responsable Logistique' : 
+                      user.role === 'MARKETING' ? 'Responsable Marketing' : 
+                      user.role === 'SUPPORT' ? 'Support Client / SAV' : 
+                      user.role === 'RESPO' ? 'Responsable (Respo)' :
+                      user.role === 'ADMIN_RESPO' ? 'Admin des Responsables' :
+                      user.role === 'SUBSCRIBER_VIP' ? 'Membre Abonné VIP' : 'Client Askary'
+                    }
                   </span>
                 </div>
 

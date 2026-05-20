@@ -48,6 +48,41 @@ export const AuthProvider = ({ children }) => {
         setUser(mockUser);
         localStorage.setItem('askary_user', JSON.stringify(mockUser));
         return mockUser;
+      } else if (email === 'preparateur@askary.ma' && password === 'Password123') {
+        const mockLogistics = { id: 4, username: 'Logistique ASFAR', email, role: 'LOGISTICS', subscriber: false, fidelityPoints: 0 };
+        setUser(mockLogistics);
+        localStorage.setItem('askary_user', JSON.stringify(mockLogistics));
+        return mockLogistics;
+      } else if (email === 'marketing@askary.ma' && password === 'Password123') {
+        const mockMarketing = { id: 5, username: 'Marketing ASFAR', email, role: 'MARKETING', subscriber: false, fidelityPoints: 0 };
+        setUser(mockMarketing);
+        localStorage.setItem('askary_user', JSON.stringify(mockMarketing));
+        return mockMarketing;
+      } else if (email === 'support@askary.ma' && password === 'Password123') {
+        const mockSupport = { id: 6, username: 'Support ASFAR', email, role: 'SUPPORT', subscriber: false, fidelityPoints: 0 };
+        setUser(mockSupport);
+        localStorage.setItem('askary_user', JSON.stringify(mockSupport));
+        return mockSupport;
+      } else if (email === 'vip@askary.ma' && password === 'Password123') {
+        const mockVip = { id: 7, username: 'Aymane VIP 1958', email, role: 'SUBSCRIBER_VIP', askaryCardNumber: 'ASK-VIP77', subscriber: true, fidelityPoints: 500 };
+        setUser(mockVip);
+        localStorage.setItem('askary_user', JSON.stringify(mockVip));
+        return mockVip;
+      } else if (email === 'respo@askary.ma' && password === 'Password123') {
+        const mockRespo = { id: 8, username: 'Responsable ASFAR', email, role: 'RESPO', subscriber: false, fidelityPoints: 0 };
+        setUser(mockRespo);
+        localStorage.setItem('askary_user', JSON.stringify(mockRespo));
+        return mockRespo;
+      } else if (email === 'adminrespo@askary.ma' && password === 'Password123') {
+        const mockAdminRespo = { id: 9, username: 'Admin des Responsables', email, role: 'ADMIN_RESPO', subscriber: false, fidelityPoints: 0 };
+        setUser(mockAdminRespo);
+        localStorage.setItem('askary_user', JSON.stringify(mockAdminRespo));
+        return mockAdminRespo;
+      } else if (email === 'imprimerie@askary.ma' && password === 'Password123') {
+        const mockImprimerie = { id: 10, username: 'Imprimerie Cartes', email, role: 'CARD_PROD', subscriber: false, fidelityPoints: 0 };
+        setUser(mockImprimerie);
+        localStorage.setItem('askary_user', JSON.stringify(mockImprimerie));
+        return mockImprimerie;
       }
 
       // Si le serveur a répondu avec une erreur mais était en ligne

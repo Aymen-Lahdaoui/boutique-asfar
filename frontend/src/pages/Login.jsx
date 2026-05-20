@@ -25,7 +25,14 @@ export const Login = () => {
     try {
       const loggedUser = await login(email, password);
       // Rediriger l'administrateur vers le Back-Office, sinon vers la Boutique
-      if (loggedUser.role === 'ADMIN') {
+      const isRestricted = ['RESPO', 'ADMIN_RESPO'].includes(loggedUser.role);
+      const isCardProd = loggedUser.role === 'CARD_PROD';
+      const isStaff = ['ADMIN', 'LOGISTICS', 'MARKETING', 'SUPPORT'].includes(loggedUser.role);
+      if (isRestricted) {
+        navigate('/respo-shop');
+      } else if (isCardProd) {
+        navigate('/card-production');
+      } else if (isStaff) {
         navigate('/admin');
       } else {
         navigate('/shop');
@@ -210,26 +217,82 @@ export const Login = () => {
             <button 
               onClick={() => fillTestCredentials('client@askary.ma', 'Password123')}
               className="btn btn-secondary"
-              style={{ padding: '4px 8px', fontSize: '10px', width: '100%', justifyContent: 'space-between', borderRadius: '6px' }}
+              style={{ padding: '6px 12px', fontSize: '11px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderRadius: '6px', whiteSpace: 'nowrap' }}
             >
-              <span>👤 Client Standard</span>
-              <span style={{ color: 'var(--text-muted)' }}>client@askary.ma / Password123</span>
+              <span style={{ fontWeight: '600' }}>👤 Client Standard</span>
+              <span style={{ color: 'var(--text-muted)', fontSize: '9px' }}>client@askary.ma</span>
             </button>
             <button 
               onClick={() => fillTestCredentials('abonne@askary.ma', 'Password123')}
               className="btn btn-secondary"
-              style={{ padding: '4px 8px', fontSize: '10px', width: '100%', justifyContent: 'space-between', borderRadius: '6px' }}
+              style={{ padding: '6px 12px', fontSize: '11px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderRadius: '6px', whiteSpace: 'nowrap' }}
             >
-              <span>🏆 Client Abonné (-10%)</span>
-              <span style={{ color: 'var(--text-muted)' }}>abonne@askary.ma / Password123</span>
+              <span style={{ fontWeight: '600' }}>🏆 Client Abonné</span>
+              <span style={{ color: 'var(--text-muted)', fontSize: '9px' }}>abonne@askary.ma</span>
+            </button>
+            <button 
+              onClick={() => fillTestCredentials('vip@askary.ma', 'Password123')}
+              className="btn btn-secondary"
+              style={{ padding: '6px 12px', fontSize: '11px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderRadius: '6px', whiteSpace: 'nowrap' }}
+            >
+              <span style={{ fontWeight: '600' }}>💖 Supporter VIP</span>
+              <span style={{ color: 'var(--text-muted)', fontSize: '9px' }}>vip@askary.ma</span>
             </button>
             <button 
               onClick={() => fillTestCredentials('admin@askary.ma', 'AdminPassword123')}
               className="btn btn-secondary"
-              style={{ padding: '4px 8px', fontSize: '10px', width: '100%', justifyContent: 'space-between', borderRadius: '6px' }}
+              style={{ padding: '6px 12px', fontSize: '11px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderRadius: '6px', whiteSpace: 'nowrap' }}
             >
-              <span>🛠️ Administrateur</span>
-              <span style={{ color: 'var(--text-muted)' }}>admin@askary.ma / AdminPassword123</span>
+              <span style={{ fontWeight: '600' }}>🛠️ Administrateur</span>
+              <span style={{ color: 'var(--text-muted)', fontSize: '9px' }}>admin@askary.ma</span>
+            </button>
+            <button 
+              onClick={() => fillTestCredentials('preparateur@askary.ma', 'Password123')}
+              className="btn btn-secondary"
+              style={{ padding: '6px 12px', fontSize: '11px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderRadius: '6px', whiteSpace: 'nowrap' }}
+            >
+              <span style={{ fontWeight: '600' }}>📦 Logistique</span>
+              <span style={{ color: 'var(--text-muted)', fontSize: '9px' }}>preparateur@askary.ma</span>
+            </button>
+            <button 
+              onClick={() => fillTestCredentials('marketing@askary.ma', 'Password123')}
+              className="btn btn-secondary"
+              style={{ padding: '6px 12px', fontSize: '11px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderRadius: '6px', whiteSpace: 'nowrap' }}
+            >
+              <span style={{ fontWeight: '600' }}>📈 Marketing</span>
+              <span style={{ color: 'var(--text-muted)', fontSize: '9px' }}>marketing@askary.ma</span>
+            </button>
+            <button 
+              onClick={() => fillTestCredentials('support@askary.ma', 'Password123')}
+              className="btn btn-secondary"
+              style={{ padding: '6px 12px', fontSize: '11px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderRadius: '6px', whiteSpace: 'nowrap' }}
+            >
+              <span style={{ fontWeight: '600' }}>💬 Support / SAV</span>
+              <span style={{ color: 'var(--text-muted)', fontSize: '9px' }}>support@askary.ma</span>
+            </button>
+            <button 
+              onClick={() => fillTestCredentials('respo@askary.ma', 'Password123')}
+              className="btn btn-secondary"
+              style={{ padding: '6px 12px', fontSize: '11px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderRadius: '6px', whiteSpace: 'nowrap' }}
+            >
+              <span style={{ fontWeight: '600' }}>💼 Responsable (Respo)</span>
+              <span style={{ color: 'var(--text-muted)', fontSize: '9px' }}>respo@askary.ma</span>
+            </button>
+            <button 
+              onClick={() => fillTestCredentials('adminrespo@askary.ma', 'Password123')}
+              className="btn btn-secondary"
+              style={{ padding: '6px 12px', fontSize: '11px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderRadius: '6px', whiteSpace: 'nowrap' }}
+            >
+              <span style={{ fontWeight: '600' }}>👑 Admin des Respos</span>
+              <span style={{ color: 'var(--text-muted)', fontSize: '9px' }}>adminrespo@askary.ma</span>
+            </button>
+            <button 
+              onClick={() => fillTestCredentials('imprimerie@askary.ma', 'Password123')}
+              className="btn btn-secondary"
+              style={{ padding: '6px 12px', fontSize: '11px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderRadius: '6px', whiteSpace: 'nowrap' }}
+            >
+              <span style={{ fontWeight: '600' }}>🖨️ Imprimerie Cartes</span>
+              <span style={{ color: 'var(--text-muted)', fontSize: '9px' }}>imprimerie@askary.ma</span>
             </button>
           </div>
         </div>

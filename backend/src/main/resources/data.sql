@@ -29,3 +29,27 @@ INSERT INTO users (id, email, password, username, role, askary_card_number, is_s
 -- 3. Administrateur (Accès au Dashboard Admin de gestion)
 INSERT INTO users (id, email, password, username, role, askary_card_number, is_subscriber, fidelity_points) VALUES
 (3, 'admin@askary.ma', '$2a$10$fOVLL0dmUIHz1yR.9QSIO.sfnjKGGTTOVK5Kb15.1rJVMIye/rvqS', 'Admin ASFAR', 'ADMIN', NULL, false, 0);
+
+-- 4. Responsable Logistique / Presse à chaud / Flocage
+INSERT INTO users (id, email, password, username, role, askary_card_number, is_subscriber, fidelity_points) VALUES
+(4, 'preparateur@askary.ma', '$2a$10$TY0ry.EpaNHtZ058/qGuyOklJP9eoLm1r5Wojp4Hkp/MfLW6aYrZe', 'Logistique ASFAR', 'LOGISTICS', NULL, false, 0);
+
+-- 5. Responsable Marketing & Promotions (Gestion du catalogue)
+INSERT INTO users (id, email, password, username, role, askary_card_number, is_subscriber, fidelity_points) VALUES
+(5, 'marketing@askary.ma', '$2a$10$TY0ry.EpaNHtZ058/qGuyOklJP9eoLm1r5Wojp4Hkp/MfLW6aYrZe', 'Marketing ASFAR', 'MARKETING', NULL, false, 0);
+
+-- 6. Support SAV & Modération
+INSERT INTO users (id, email, password, username, role, askary_card_number, is_subscriber, fidelity_points) VALUES
+(6, 'support@askary.ma', '$2a$10$TY0ry.EpaNHtZ058/qGuyOklJP9eoLm1r5Wojp4Hkp/MfLW6aYrZe', 'Support ASFAR', 'SUPPORT', NULL, false, 0);
+
+-- 7. Supporter Abonné VIP (Accès privilégié et remise automatique)
+INSERT INTO users (id, email, password, username, role, askary_card_number, is_subscriber, fidelity_points) VALUES
+(7, 'vip@askary.ma', '$2a$10$TY0ry.EpaNHtZ058/qGuyOklJP9eoLm1r5Wojp4Hkp/MfLW6aYrZe', 'Aymane VIP 1958', 'SUBSCRIBER_VIP', 'ASK-VIP77', true, 500);
+
+-- 8. Responsable (RESPO)
+INSERT INTO users (id, email, password, username, role, askary_card_number, is_subscriber, fidelity_points) VALUES
+(8, 'respo@askary.ma', '$2a$10$TY0ry.EpaNHtZ058/qGuyOklJP9eoLm1r5Wojp4Hkp/MfLW6aYrZe', 'Responsable ASFAR', 'RESPO', NULL, false, 0);
+
+-- 9. Admin des Responsables (ADMIN_RESPO)
+INSERT INTO users (id, email, password, username, role, askary_card_number, is_subscriber, fidelity_points) VALUES
+(9, 'adminrespo@askary.ma', '$2a$10$TY0ry.EpaNHtZ058/qGuyOklJP9eoLm1r5Wojp4Hkp/MfLW6aYrZe', 'Admin des Responsables', 'ADMIN_RESPO', NULL, false, 0);

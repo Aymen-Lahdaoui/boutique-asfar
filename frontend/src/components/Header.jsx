@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
-import { ShoppingBag, LogOut, ShieldAlert, Award, Star, User as UserIcon } from 'lucide-react';
+import { ShoppingBag, LogOut, ShieldAlert, Award, Star, User as UserIcon, Shield, History } from 'lucide-react';
 
 export const Header = ({ onCartToggle }) => {
   const { user, logout } = useAuth();
@@ -11,9 +11,13 @@ export const Header = ({ onCartToggle }) => {
 
   const totalCartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
+  const isRespoRole = user && ['RESPO', 'ADMIN_RESPO'].includes(user.role);
+  const isCardProd = user && user.role === 'CARD_PROD';
+  const hideStorefront = isRespoRole || isCardProd;
+
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate('/login');
   };
 
   return (
@@ -38,7 +42,7 @@ export const Header = ({ onCartToggle }) => {
         width: '100%'
       }}>
         {/* Branding Logo */}
-        <Link to="/" style={{
+        <Link to={isCardProd ? "/card-production" : isRespoRole ? "/respo-shop" : "/"} style={{
           textDecoration: 'none',
           display: 'flex',
           alignItems: 'center',
@@ -60,41 +64,24 @@ export const Header = ({ onCartToggle }) => {
             <img 
               src="/AS_FAR_logo.png" 
               alt="ASFAR Logo" 
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'contain'
-              }}
-              onError={(e) => {
-                e.target.onerror = null;
-                // If logo.png fails, show a text fallback
-                e.target.style.display = 'none';
-                e.target.nextSibling.style.display = 'flex';
-              }}
+              style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
             />
-            <span style={{
-              display: 'none',
-              fontFamily: "'Outfit', sans-serif",
-              fontWeight: '900',
-              color: 'white',
-              fontSize: '15px'
-            }}>FAR</span>
           </div>
-          <div>
-            <h1 className="text-gradient-askary" style={{
-              fontSize: '22px',
-              fontWeight: '800',
-              letterSpacing: '1px',
-              fontFamily: "'Outfit', sans-serif",
-              margin: 0
-            }}>
-              ASFAR BOUTIQUE
-            </h1>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{
-              fontSize: '9px',
-              color: 'var(--text-muted)',
-              textTransform: 'uppercase',
+              color: 'var(--asfar-gold)',
+              fontSize: '18px',
+              fontFamily: "'Cinzel', serif",
+              fontWeight: '900',
+              letterSpacing: '1px'
+            }}>
+              ASFAR
+            </span>
+            <span style={{
+              color: 'var(--text-secondary)',
+              fontSize: '10px',
               letterSpacing: '2px',
+              textTransform: 'uppercase',
               fontWeight: 'bold',
               display: 'block',
               marginTop: '-3px'
@@ -110,9 +97,47 @@ export const Header = ({ onCartToggle }) => {
           alignItems: 'center',
           gap: '2rem'
         }}>
-          <Link to="/" className="nav-link" style={navLinkStyle}>Accueil</Link>
-          <Link to="/shop" className="nav-link" style={navLinkStyle}>Boutique</Link>
-          {user && user.role === 'ADMIN' && (
+          {isCardProd ? (
+            <>
+              <Link to="/card-production" className="nav-link" style={{
+                ...navLinkStyle,
+                color: 'var(--asfar-gold)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                fontWeight: 'bold'
+              }}>
+                <Shield size={14} /> Production Cartes
+              </Link>
+              <Link to="/card-history" className="nav-link" style={{
+                ...navLinkStyle,
+                color: 'var(--asfar-gold)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                fontWeight: 'bold'
+              }}>
+                <History size={14} /> Impressions Terminées
+              </Link>
+            </>
+          ) : isRespoRole ? (
+            <Link to="/respo-shop" className="nav-link" style={{
+              ...navLinkStyle,
+              color: 'var(--asfar-gold)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px',
+              fontWeight: 'bold'
+            }}>
+              <Shield size={14} /> Boutique Pro
+            </Link>
+          ) : (
+            <>
+              <Link to="/" className="nav-link" style={navLinkStyle}>Accueil</Link>
+              <Link to="/shop" className="nav-link" style={navLinkStyle}>Boutique</Link>
+            </>
+          )}
+          {user && ['ADMIN', 'LOGISTICS', 'MARKETING', 'SUPPORT'].includes(user.role) && (
             <Link to="/admin" className="nav-link" style={{
               ...navLinkStyle,
               color: 'var(--asfar-gold)',
@@ -173,27 +198,36 @@ export const Header = ({ onCartToggle }) => {
                   marginTop: '2px',
                   justifyContent: 'flex-end'
                 }}>
-                  {/* Subscriber Badge */}
-                  {user.subscriber ? (
-                    <span className="badge badge-gold" style={{ fontSize: '8px', padding: '1px 5px' }}>
-                      Abonné Askary
+                  {/* User Badges */}
+                  {user.role === 'ADMIN_RESPO' || user.role === 'RESPO' || user.role === 'CARD_PROD' ? (
+                    <span className="badge badge-gold" style={{ fontSize: '9px', padding: '2px 6px', fontWeight: 'bold' }}>
+                      {user.role === 'ADMIN_RESPO' ? 'Admin Staff' : user.role === 'CARD_PROD' ? 'Production Cartes' : 'Responsable Staff'}
                     </span>
                   ) : (
-                    <span className="badge badge-green" style={{ fontSize: '8px', padding: '1px 5px', opacity: 0.7 }}>
-                      Fan
-                    </span>
+                    <>
+                      {/* Subscriber Badge */}
+                      {user.subscriber ? (
+                        <span className="badge badge-gold" style={{ fontSize: '8px', padding: '1px 5px' }}>
+                          Abonné Askary
+                        </span>
+                      ) : (
+                        <span className="badge badge-green" style={{ fontSize: '8px', padding: '1px 5px', opacity: 0.7 }}>
+                          Fan
+                        </span>
+                      )}
+                      {/* Fidelity Points Badge */}
+                      <span style={{
+                        fontSize: '10px',
+                        color: 'var(--asfar-gold)',
+                        fontWeight: 'bold',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '2px'
+                      }}>
+                        <Star size={10} fill="currentColor" /> {user.fidelityPoints} pts
+                      </span>
+                    </>
                   )}
-                  {/* Fidelity Points Badge */}
-                  <span style={{
-                    fontSize: '10px',
-                    color: 'var(--asfar-gold)',
-                    fontWeight: 'bold',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '2px'
-                  }}>
-                    <Star size={10} fill="currentColor" /> {user.fidelityPoints} pts
-                  </span>
                 </div>
               </Link>
 
@@ -222,8 +256,8 @@ export const Header = ({ onCartToggle }) => {
             </div>
           )}
 
-          {/* Floating Cart Button - Only visible if logged in */}
-          {user && (
+          {/* Floating Cart Button - Only visible if logged in and not respo/adminrespo */}
+          {user && !hideStorefront && (
             <button 
               onClick={onCartToggle}
               className="btn btn-primary"

@@ -94,8 +94,9 @@ export const Checkout = () => {
       const response = await axios.post('http://localhost:8082/api/orders', orderInput);
       const savedOrder = response.data;
       
-      // Stocker les points gagnés calculés par l'API
-      const earned = Math.floor(savedOrder.totalPrice / 10);
+      // Stocker les points gagnés calculés par l'API (avec bonus x2 pour les VIP !)
+      const isVip = user && user.role === 'SUBSCRIBER_VIP';
+      const earned = Math.floor(savedOrder.totalPrice / 10) * (isVip ? 2 : 1);
       setPointsEarned(earned);
       
       // Vider le panier local et valider le succès
@@ -118,8 +119,9 @@ export const Checkout = () => {
         return;
       }
 
-      // Si le stock est suffisant en local, simuler l'achat
-      const earned = Math.floor(totalPrice / 10);
+      // Si le stock est suffisant en local, simuler l'achat (avec bonus x2 pour les VIP !)
+      const isVip = user && user.role === 'SUBSCRIBER_VIP';
+      const earned = Math.floor(totalPrice / 10) * (isVip ? 2 : 1);
       setPointsEarned(earned);
       addLocalFidelityPoints(earned); // Créditer les points fidélité sur le profil local
 

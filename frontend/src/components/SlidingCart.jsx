@@ -169,13 +169,28 @@ export const SlidingCart = ({ isOpen, onClose }) => {
 
                     {/* Size & Custom details */}
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '4px' }}>
-                      <span className="badge badge-green" style={{ fontSize: '8px', padding: '1px 4px' }}>
-                        Taille : {item.size}
-                      </span>
-                      {item.customName && (
-                        <span className="badge badge-gold" style={{ fontSize: '8px', padding: '1px 4px', display: 'inline-flex', alignItems: 'center', gap: '2px' }}>
-                          <Sparkles size={8} /> Floqué {item.customName} #{item.customNumber}
-                        </span>
+                      {item.product.isCard ? (
+                        <>
+                          <span className="badge badge-gold" style={{ fontSize: '8px', padding: '1px 4px' }}>
+                            Abonnement Club
+                          </span>
+                          {item.customName && (
+                            <span className="badge badge-green" style={{ fontSize: '8px', padding: '1px 4px' }}>
+                              Titulaire : {item.customName}
+                            </span>
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          <span className="badge badge-green" style={{ fontSize: '8px', padding: '1px 4px' }}>
+                            Taille : {item.size}
+                          </span>
+                          {item.customName && (
+                            <span className="badge badge-gold" style={{ fontSize: '8px', padding: '1px 4px', display: 'inline-flex', alignItems: 'center', gap: '2px' }}>
+                              <Sparkles size={8} /> Floqué {item.customName} #{item.customNumber}
+                            </span>
+                          )}
+                        </>
                       )}
                     </div>
                   </div>
